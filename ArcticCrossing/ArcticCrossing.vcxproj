@@ -85,39 +85,6 @@ xcopy /Y "C:\SDL2\SDL2_ttf-2.0.14\lib\x86\*.dll" "$(OutDir)"
 xcopy /Y "C:\SDL2\SDL2_mixer-2.0.1\lib\x86\*.dll" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="AsteroidsSDL.cpp" />
-    <ClCompile Include="cAsteroid.cpp" />
-    <ClCompile Include="cBkGround.cpp" />
-    <ClCompile Include="cBullet.cpp" />
-    <ClCompile Include="cFont.cpp" />
-    <ClCompile Include="cFontMgr.cpp" />
-    <ClCompile Include="cGame.cpp" />
-    <ClCompile Include="cRocket.cpp" />
-    <ClCompile Include="cSDL2WNDManager.cpp" />
-    <ClCompile Include="cSound.cpp" />
-    <ClCompile Include="cSoundMgr.cpp" />
-    <ClCompile Include="cSprite.cpp" />
-    <ClCompile Include="cTexture.cpp" />
-    <ClCompile Include="cTextureMgr.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="asteroidsGame.h" />
-    <ClInclude Include="cAsteroid.h" />
-    <ClInclude Include="cBkGround.h" />
-    <ClInclude Include="cBullet.h" />
-    <ClInclude Include="cFont.h" />
-    <ClInclude Include="cFontMgr.h" />
-    <ClInclude Include="cGame.h" />
-    <ClInclude Include="cRocket.h" />
-    <ClInclude Include="cSDL2WNDManager.h" />
-    <ClInclude Include="cSound.h" />
-    <ClInclude Include="cSoundMgr.h" />
-    <ClInclude Include="cSprite.h" />
-    <ClInclude Include="cTexture.h" />
-    <ClInclude Include="cTextureMgr.h" />
-    <ClInclude Include="GameConstants.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
