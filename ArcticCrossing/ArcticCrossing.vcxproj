@@ -15,7 +15,9 @@
     <ClInclude Include="cBkGround.h" />
     <ClInclude Include="cFont.h" />
     <ClInclude Include="cFontMgr.h" />
+    <ClInclude Include="cGame.h" />
     <ClInclude Include="cSDL2WNDManager.h" />
+    <ClInclude Include="cSeal.h" />
     <ClInclude Include="cSound.h" />
     <ClInclude Include="cSoundMgr.h" />
     <ClInclude Include="cSprite.h" />
@@ -27,12 +29,14 @@
     <ClCompile Include="cBkGround.cpp" />
     <ClCompile Include="cFont.cpp" />
     <ClCompile Include="cFontMgr.cpp" />
+    <ClCompile Include="cGame.cpp" />
     <ClCompile Include="cSDL2WNDManager.cpp" />
     <ClCompile Include="cSound.cpp" />
     <ClCompile Include="cSoundMgr.cpp" />
     <ClCompile Include="cSprite.cpp" />
     <ClCompile Include="cTexture.cpp" />
     <ClCompile Include="cTextureMgr.cpp" />
+    <ClCompile Include="cSeal.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{E4133B08-2036-48B5-AA64-8DE2ADA837AC}</ProjectGuid>
