@@ -42,7 +42,7 @@ private:
 
 	// Sprites for displaying background, seal and objects
 	cSprite spriteBkgd;
-	cSprite theSeal;
+	cSeal theSeal;
 	// game related variables
 	vector<LPCSTR> textureName;
 	vector<LPCSTR> textName;

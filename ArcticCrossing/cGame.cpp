@@ -108,3 +108,112 @@ void cGame::render(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 	theSeal.render(theRenderer, &theSeal.getSpriteDimensions(), &theSeal.getSpritePos(), theSeal.getSpriteRotAngle(), &theSeal.getSpriteCentre(), theSeal.getSpriteScale());
 	SDL_RenderPresent(theRenderer);
 }
+
+
+bool cGame::getInput(bool theLoop)
+{
+	SDL_Event event;
+
+	while (SDL_PollEvent(&event))
+	{
+		if (event.type == SDL_QUIT)
+		{
+			theLoop = false;
+		}
+
+		switch (event.type)
+		{
+		case SDL_MOUSEBUTTONDOWN:
+			switch (event.button.button)
+			{
+			case SDL_BUTTON_LEFT:
+			{
+			}
+				break;
+			case SDL_BUTTON_RIGHT:
+				break;
+			default:
+				break;
+			}
+			break;
+		case SDL_MOUSEBUTTONUP:
+			switch (event.button.button)
+			{
+			case SDL_BUTTON_LEFT:
+			{
+			}
+				break;
+			case SDL_BUTTON_RIGHT:
+				break;
+			default:
+				break;
+			}
+			break;
+		case SDL_MOUSEMOTION:
+			break;
+		case SDL_KEYDOWN:
+			switch (event.key.keysym.sym)
+			{
+			case SDLK_ESCAPE:
+				theLoop = false;
+				break;
+			case SDLK_DOWN:
+			{
+					if (theSeal.getSpritePos().x < (renderWidth - theSeal.getSpritePos().w))
+					{
+						theSeal.setSpriteTranslation({ -50, 0 });
+					}
+			}
+				break;
+
+			case SDLK_UP:
+			{
+					if (theSeal.getSpritePos().x < (renderWidth - theSeal.getSpritePos().w))
+					{
+						theSeal.setSpriteTranslation({ 50, 0 });
+					}
+			}
+				break;
+			case SDLK_RIGHT:
+			{
+				   if (theSeal.getSpritePos().x < (renderWidth - theSeal.getSpritePos().w))
+				   {
+					   theSeal.setSpriteTranslation({ 0, 50 });
+				   }
+			}
+				break;
+
+			case SDLK_LEFT:
+			{
+				  if (theSeal.getSpritePos().x < (renderWidth - theSeal.getSpritePos().w))
+			      {
+					  theSeal.setSpriteTranslation({ 0, -50 });
+				  }
+			}
+				break;
+			case SDLK_SPACE:
+			{
+							   theBullets.push_back(new cBullet);
+							   int numBullets = theBullets.size() - 1;
+							   theBullets[numBullets]->setSpritePos({ theRocket.getBoundingRect().x + theRocket.getSpriteCentre().x, theRocket.getBoundingRect().y + theRocket.getSpriteCentre().y });
+							   theBullets[numBullets]->setSpriteTranslation({ 2.0f, 2.0f });
+							   theBullets[numBullets]->setTexture(theTextureMgr->getTexture("bullet"));
+							   theBullets[numBullets]->setSpriteDimensions(theTextureMgr->getTexture("bullet")->getTWidth(), theTextureMgr->getTexture("bullet")->getTHeight());
+							   theBullets[numBullets]->setBulletVelocity({ 2.0f, 2.0f });
+							   theBullets[numBullets]->setSpriteRotAngle(theRocket.getSpriteRotAngle());
+							   theBullets[numBullets]->setActive(true);
+							   cout << "Bullet added to Vector at position - x: " << theRocket.getBoundingRect().x << " y: " << theRocket.getBoundingRect().y << endl;
+			}
+				theSoundMgr->getSnd("shot")->play(0);
+				break;
+			default:
+				break;
+			}
+
+		default:
+			break;
+		}
+
+	}
+	return theLoop;
+}
