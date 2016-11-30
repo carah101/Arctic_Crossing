@@ -20,6 +20,6 @@ public:
 	void render();		// Default render function
 	void update(float deltaTime);		// Seal update method
 	void setSealMotion(SDL_Point sealMotion);   //sets the distance moved by the seal
-	SDL_Point getSealMotion();				 // sets the distance moved by the seal
+	SDL_Point getSealMotion();				 //gets the distance moved by the seal
 };
 #endif
