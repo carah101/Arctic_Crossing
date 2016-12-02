@@ -83,10 +83,13 @@
     <ClCompile Include="cTextureMgr.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="cSeal.cpp">
+    <ClCompile Include="ArcticCrossingSDL.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="cGame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cSeal.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

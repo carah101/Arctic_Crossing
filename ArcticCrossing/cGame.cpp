@@ -49,14 +49,14 @@ void cGame::initialise(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 
 	//Create textures for text
 	fontList = { "icePixel" };
-	fontsToUse = { "Fonts/ice-pixel-7.ttf" };
+	fontsToUse = { "Fonts/ice_pixel-7.ttf" };
 	for (int fonts = 0; fonts < fontList.size(); fonts++)
 	{
 		theFontMgr->addFont(fontList[fonts], fontsToUse[fonts], 36);
 	}
-	gameTextList = { "Arctic Crossing" };
+	gameTextList = {"Arctic Crossing"};
 
-	theTextureMgr->addTexture("Title", theFontMgr->getFont("icePixel")->createTextTexture(theRenderer, gameTextList[0], SOLID, { 0, 255, 0, 255 }, { 0, 0, 0, 0 }));
+	theTextureMgr->addTexture("Title", theFontMgr->getFont("icePixel")->createTextTexture(theRenderer, gameTextList[0], SOLID, { 255, 255, 255, 255 }, { 0, 0, 0, 0 }));
 
 	//Load game sounds
 	soundList = { "music", "pickup", "splash", "gameOver", "nextback" };
@@ -73,7 +73,7 @@ void cGame::initialise(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 	spriteBkgd.setTexture(theTextureMgr->getTexture("theBackground"));
 	spriteBkgd.setSpriteDimensions(theTextureMgr->getTexture("theBackground")->getTWidth(), theTextureMgr->getTexture("theBackground")->getTHeight());
 
-	theSeal.setSpritePos({ 575, 200 });
+	theSeal.setSpritePos({ 40, 560});
 	theSeal.setTexture(theTextureMgr->getTexture("theSeal"));
 	theSeal.setSpriteDimensions(theTextureMgr->getTexture("theSeal")->getTWidth(), theTextureMgr->getTexture("theSeal")->getTHeight());
 	theSeal.setSealMotion({ 0, 0 });
@@ -107,6 +107,21 @@ void cGame::render(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 	// render the seal
 	theSeal.render(theRenderer, &theSeal.getSpriteDimensions(), &theSeal.getSpritePos(), theSeal.getSpriteRotAngle(), &theSeal.getSpriteCentre(), theSeal.getSpriteScale());
 	SDL_RenderPresent(theRenderer);
+}
+void cGame::render(SDL_Window* theSDLWND, SDL_Renderer* theRenderer, double rotAngle, SDL_Point* spriteCentre)
+{
+
+	SDL_RenderPresent(theRenderer);
+}
+
+void cGame::update()
+{
+
+}
+
+void cGame::update(double deltaTime)
+{
+
 }
 
 
@@ -161,7 +176,7 @@ bool cGame::getInput(bool theLoop)
 			{
 					if (theSeal.getSpritePos().x < (renderWidth - theSeal.getSpritePos().w))
 					{
-						theSeal.setSpriteTranslation({ -50, 0 });
+						theSeal.setSealMotion({ -50, 0 });
 					}
 			}
 				break;
@@ -193,16 +208,16 @@ bool cGame::getInput(bool theLoop)
 				break;
 			case SDLK_SPACE:
 			{
-							   theBullets.push_back(new cBullet);
-							   int numBullets = theBullets.size() - 1;
-							   theBullets[numBullets]->setSpritePos({ theRocket.getBoundingRect().x + theRocket.getSpriteCentre().x, theRocket.getBoundingRect().y + theRocket.getSpriteCentre().y });
-							   theBullets[numBullets]->setSpriteTranslation({ 2.0f, 2.0f });
-							   theBullets[numBullets]->setTexture(theTextureMgr->getTexture("bullet"));
-							   theBullets[numBullets]->setSpriteDimensions(theTextureMgr->getTexture("bullet")->getTWidth(), theTextureMgr->getTexture("bullet")->getTHeight());
-							   theBullets[numBullets]->setBulletVelocity({ 2.0f, 2.0f });
-							   theBullets[numBullets]->setSpriteRotAngle(theRocket.getSpriteRotAngle());
-							   theBullets[numBullets]->setActive(true);
-							   cout << "Bullet added to Vector at position - x: " << theRocket.getBoundingRect().x << " y: " << theRocket.getBoundingRect().y << endl;
+							   //theBullets.push_back(new cBullet);
+							   //int numBullets = theBullets.size() - 1;
+							   //theBullets[numBullets]->setSpritePos({ theRocket.getBoundingRect().x + theRocket.getSpriteCentre().x, theRocket.getBoundingRect().y + theRocket.getSpriteCentre().y });
+							   //theBullets[numBullets]->setSpriteTranslation({ 2.0f, 2.0f });
+							   //theBullets[numBullets]->setTexture(theTextureMgr->getTexture("bullet"));
+							   //theBullets[numBullets]->setSpriteDimensions(theTextureMgr->getTexture("bullet")->getTWidth(), theTextureMgr->getTexture("bullet")->getTHeight());
+							   //theBullets[numBullets]->setBulletVelocity({ 2.0f, 2.0f });
+							   //theBullets[numBullets]->setSpriteRotAngle(theRocket.getSpriteRotAngle());
+							   //theBullets[numBullets]->setActive(true);
+							   //cout << "Bullet added to Vector at position - x: " << theRocket.getBoundingRect().x << " y: " << theRocket.getBoundingRect().y << endl;
 			}
 				theSoundMgr->getSnd("shot")->play(0);
 				break;
@@ -216,4 +231,28 @@ bool cGame::getInput(bool theLoop)
 
 	}
 	return theLoop;
+}
+
+
+double cGame::getElapsedSeconds()
+{
+	this->m_CurrentTime = high_resolution_clock::now();
+	this->deltaTime = (this->m_CurrentTime - this->m_lastTime);
+	this->m_lastTime = this->m_CurrentTime;
+	return deltaTime.count();
+}
+
+void cGame::cleanUp(SDL_Window* theSDLWND)
+{
+	// Delete our OpengL context
+	SDL_GL_DeleteContext(theSDLWND);
+
+	// Destroy the window
+	SDL_DestroyWindow(theSDLWND);
+
+	// Quit IMG system
+	IMG_Quit();
+
+	// Shutdown SDL 2
+	SDL_Quit();
 }
