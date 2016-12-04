@@ -16,7 +16,7 @@ cSprite::cSprite() // Default constructor
 {
 
 	this->spritePos_2D = { 0, 0, 0, 0 };
-	this->spriteTexture = NULL;
+	this->spriteTexture;
 	this->spriteCentre = {0, 0};
 	this->spriteScale = { 1, 1 };
 	this->spriteRotationAngle = 0;

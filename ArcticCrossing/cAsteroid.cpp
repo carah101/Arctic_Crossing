@@ -1,18 +1,19 @@
 /*
 =================
-cSeal.cpp
+cAsteroid.cpp
 - Header file for class definition - IMPLEMENTATION
 =================
 */
-#include "cSeal.h"
+#include "cAsteroid.h"
+
 /*
 =================================================================
 Defualt Constructor
 =================================================================
 */
-cSeal::cSeal() : cSprite()
+cAsteroid::cAsteroid() : cSprite()
 {
-	this->sealMotion = { 0.0f, 0.0f };
+	this->asteroidVelocity = { 0.0, 0.0 };
 }
 /*
 =================================================================
@@ -20,43 +21,38 @@ Update the sprite position
 =================================================================
 */
 
-void cSeal::update(float deltaTime)
+void cAsteroid::update(double deltaTime)
 {
-	FPoint direction = { 0.0f, 0.0f };
-	direction.X = (sin(this->getSpriteRotAngle()*PI / 180));
-	direction.Y = -(cos(this->getSpriteRotAngle()*PI / 180));
 
-	direction.X *= this->getSpriteTranslation().x;
-	direction.Y *= this->getSpriteTranslation().y;
-
-	this->sealMotion.x = this->sealMotion.x + direction.X;
-	this->sealMotion.y = this->sealMotion.y + direction.Y;
+	this->setSpriteRotAngle(this->getSpriteRotAngle() +(5.0f * deltaTime)); 
+	if (this->getSpriteRotAngle() > 360)
+	{
+		this->setSpriteRotAngle(this->getSpriteRotAngle() -360);
+	}
 
 	SDL_Rect currentSpritePos = this->getSpritePos();
-	currentSpritePos.x += this->sealMotion.x * deltaTime;
-	currentSpritePos.y += this->sealMotion.y * deltaTime;
-
-	this->sealMotion.x *= 0.95;
-	this->sealMotion.y *= 0.95;
+	currentSpritePos.x += this->getSpriteTranslation().x * deltaTime;
+	currentSpritePos.y += this->getSpriteTranslation().y * deltaTime;
 
 	this->setSpritePos({ currentSpritePos.x, currentSpritePos.y });
+	cout << "Asteroid position - x: " << this->getSpritePos().x << " y: " << this->getSpritePos().y << " deltaTime: " << deltaTime << endl;
 	this->setBoundingRect(this->getSpritePos());
 }
 /*
 =================================================================
-Sets the velocity for the rocket
+  Sets the velocity for the Asteroid
 =================================================================
 */
-void cSeal::setSealMotion(SDL_Point rocketVel)
+void cAsteroid::setAsteroidVelocity(SDL_Point AsteroidVel)
 {
-	sealMotion = rocketVel;
+	asteroidVelocity = AsteroidVel;
 }
 /*
 =================================================================
-Gets the rocket velocity
+  Gets the Asteroid velocity
 =================================================================
 */
-SDL_Point cSeal::getSealMotion()
+SDL_Point cAsteroid::getAsteroidVelocity()
 {
-	return sealMotion;
+	return asteroidVelocity;
 }

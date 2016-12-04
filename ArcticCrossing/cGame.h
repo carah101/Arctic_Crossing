@@ -43,10 +43,13 @@ private:
 	// Sprites for displaying background, seal and objects
 	cSprite spriteBkgd;
 	cSeal theSeal;
+	cSprite theFish;
+	cAsteroid theAsteroid;
 	// game related variables
 	vector<LPCSTR> textureName;
 	vector<LPCSTR> textName;
 	vector<LPCSTR> texturesToUse;
+	vector<cAsteroid*> theAsteroids;
 	// Fonts to use
 	vector<LPCSTR> fontList;
 	vector<LPCSTR> fontsToUse;

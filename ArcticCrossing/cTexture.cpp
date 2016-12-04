@@ -15,7 +15,7 @@ using namespace std;
 */
 cTexture::cTexture()
 {
-	cTexture::sdlTextureID = NULL;
+	//cTexture::sdlTextureID = NULL;
 }
 /*
 =================

@@ -1,8 +1,8 @@
 /*
 == == == == == == == == =
-cRocket.h
+cSeal.h
 - Header file for class definition - SPECIFICATION
-- Header file for the Rocket class which is a child of cSprite class
+- Header file for the Seal class which is a child of cSprite class
 == == == == == == == == =
 */
 #ifndef _CSEAL_H

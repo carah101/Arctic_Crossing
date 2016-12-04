@@ -40,8 +40,8 @@ void cGame::initialise(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 	theSoundMgr->initMixer();
 
 	//Store the textures
-	textureName = { "theBackground", "theSeal" };
-	texturesToUse = { "Images\\Background.png", "Images\\Seal.png" };
+	textureName = { "theBackground", "theSeal", "theFish", "iceBlock" };
+	texturesToUse = { "Images\\Background.png", "Images\\Seal.png", "Images\\Fish.png", "Images\\Ice.png", };
 	for (int tCount = 0; tCount < textureName.size(); tCount++)
 	{
 		theTextureMgr->addTexture(textureName[tCount], texturesToUse[tCount]);
@@ -61,7 +61,7 @@ void cGame::initialise(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 	//Load game sounds
 	soundList = { "music", "pickup", "splash", "gameOver", "nextback" };
 	soundTypes = { MUSIC, SFX, SFX, SFX, SFX };
-	soundsToUse = { "", "", "", "", "" };
+	soundsToUse = { "Audio/Bit Quest.mp3", "Audio/Pickup.wav", "Audio/Splash.wav", "", "Audio/Menu sound.wav" };
 	for (int sounds = 0; sounds < soundList.size(); sounds++)
 	{
 		theSoundMgr->add(soundList[sounds], soundsToUse[sounds], soundTypes[sounds]);
@@ -76,7 +76,19 @@ void cGame::initialise(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 	theSeal.setSpritePos({ 40, 560});
 	theSeal.setTexture(theTextureMgr->getTexture("theSeal"));
 	theSeal.setSpriteDimensions(theTextureMgr->getTexture("theSeal")->getTWidth(), theTextureMgr->getTexture("theSeal")->getTHeight());
-	theSeal.setSealMotion({ 0, 0 });
+
+
+	/*for (int astro = 0; astro < 5; astro++)
+	{
+		theAsteroids.push_back(new cAsteroid);
+		theAsteroids[astro]->setSpritePos({ 100 * (rand() % 5 + 1), 50 * (rand() % 5 + 1) });
+		theAsteroids[astro]->setSpriteTranslation({ (rand() % 8 + 1), (rand() % 8 + 1) });
+		int randAsteroid = rand() % 4;
+		theAsteroids[astro]->setTexture(theTextureMgr->getTexture("iceBlock"));
+		theAsteroids[astro]->setSpriteDimensions(theTextureMgr->getTexture("iceBlock")->getTWidth(), theTextureMgr->getTexture("iceBlock")->getTHeight());
+		theAsteroids[astro]->setAsteroidVelocity({ 3.0f, 0.0f });
+		theAsteroids[astro]->setActive(true);
+	}*/
 }
 
 void cGame::run(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
@@ -106,6 +118,9 @@ void cGame::render(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 	tempTextTexture->renderTexture(theRenderer, tempTextTexture->getTexture(), &tempTextTexture->getTextureRect(), &pos, scale);
 	// render the seal
 	theSeal.render(theRenderer, &theSeal.getSpriteDimensions(), &theSeal.getSpritePos(), theSeal.getSpriteRotAngle(), &theSeal.getSpriteCentre(), theSeal.getSpriteScale());
+	SDL_RenderPresent(theRenderer);
+	//render the fish
+	theFish.render(theRenderer, &theFish.getSpriteDimensions(), &theFish.getSpritePos(), theFish.getSpriteRotAngle(), &theFish.getSpriteCentre(), theFish.getSpriteScale());
 	SDL_RenderPresent(theRenderer);
 }
 void cGame::render(SDL_Window* theSDLWND, SDL_Renderer* theRenderer, double rotAngle, SDL_Point* spriteCentre)
@@ -174,52 +189,34 @@ bool cGame::getInput(bool theLoop)
 				break;
 			case SDLK_DOWN:
 			{
-					if (theSeal.getSpritePos().x < (renderWidth - theSeal.getSpritePos().w))
-					{
-						theSeal.setSealMotion({ -50, 0 });
-					}
+				theSeal.setSealMotion({ 0,-10 });
+				cout << "down";
 			}
 				break;
 
 			case SDLK_UP:
 			{
-					if (theSeal.getSpritePos().x < (renderWidth - theSeal.getSpritePos().w))
-					{
-						theSeal.setSpriteTranslation({ 50, 0 });
-					}
+				theSeal.setSealMotion({ 0, 10 });
+				cout << "up";
 			}
 				break;
 			case SDLK_RIGHT:
 			{
-				   if (theSeal.getSpritePos().x < (renderWidth - theSeal.getSpritePos().w))
-				   {
-					   theSeal.setSpriteTranslation({ 0, 50 });
-				   }
+				theSeal.setSealMotion({ 10, 0 });
+				cout << "right";
 			}
 				break;
 
 			case SDLK_LEFT:
 			{
-				  if (theSeal.getSpritePos().x < (renderWidth - theSeal.getSpritePos().w))
-			      {
-					  theSeal.setSpriteTranslation({ 0, -50 });
-				  }
+				theSeal.setSealMotion({ -10, 0 });
+				cout << "left";
 			}
 				break;
 			case SDLK_SPACE:
 			{
-							   //theBullets.push_back(new cBullet);
-							   //int numBullets = theBullets.size() - 1;
-							   //theBullets[numBullets]->setSpritePos({ theRocket.getBoundingRect().x + theRocket.getSpriteCentre().x, theRocket.getBoundingRect().y + theRocket.getSpriteCentre().y });
-							   //theBullets[numBullets]->setSpriteTranslation({ 2.0f, 2.0f });
-							   //theBullets[numBullets]->setTexture(theTextureMgr->getTexture("bullet"));
-							   //theBullets[numBullets]->setSpriteDimensions(theTextureMgr->getTexture("bullet")->getTWidth(), theTextureMgr->getTexture("bullet")->getTHeight());
-							   //theBullets[numBullets]->setBulletVelocity({ 2.0f, 2.0f });
-							   //theBullets[numBullets]->setSpriteRotAngle(theRocket.getSpriteRotAngle());
-							   //theBullets[numBullets]->setActive(true);
-							   //cout << "Bullet added to Vector at position - x: " << theRocket.getBoundingRect().x << " y: " << theRocket.getBoundingRect().y << endl;
+
 			}
-				theSoundMgr->getSnd("shot")->play(0);
 				break;
 			default:
 				break;
